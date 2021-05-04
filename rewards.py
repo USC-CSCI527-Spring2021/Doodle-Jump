@@ -66,5 +66,33 @@ def formulate_reward(reward_type, reward_reason, spring_touch=False, monster_tou
                 reward += 3
             if monster_touch:
                 reward -= 4
+    elif reward_type == 5:
+        # version 5 - agent not penalised for no points scored
+        if reward_reason == "DEFAULT":
+            reward = 0
+        if reward_reason == "DEAD":
+            reward = -2
+        if reward_reason == "STUCK":
+            reward = -2
+        if reward_reason == "SCORED":
+            reward = 3 + math.log(score)
+            if spring_touch:
+                reward += 3
+            if monster_touch:
+                reward -= 4
+    elif reward_type == 6:
+        # version 6 - same as type 5 but high penalty for dying/stuck
+        if reward_reason == "DEFAULT":
+            reward = 0
+        if reward_reason == "DEAD":
+            reward = -20
+        if reward_reason == "STUCK":
+            reward = -20
+        if reward_reason == "SCORED":
+            reward = 3 + math.log(score)
+            if spring_touch:
+                reward += 3
+            if monster_touch:
+                reward -= 4
 
     return reward
